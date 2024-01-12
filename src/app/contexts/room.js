@@ -9,6 +9,8 @@ import {
 } from "react";
 import { Communicator } from "@pw2016/pw-player-communicator";
 
+import { checkAudio } from "@/shared/utils";
+
 const Room = createContext();
 
 export const RoomProvider = ({
@@ -16,7 +18,7 @@ export const RoomProvider = ({
   sessionToken,
   defaultMode = "offline",
 }) => {
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
   const [volume, setVolume] = useState(1);
   const [playing, setPlaying] = useState(false);
   const [roomMode, setRoomMode] = useState(defaultMode);
@@ -36,9 +38,8 @@ export const RoomProvider = ({
 
   const onVideoPlay = useCallback(() => {
     setPlaying(true);
-    communicator.setMuted(false);
-    setVolume(1);
-  }, [communicator]);
+    if (!checkAudio()) setMuted(true);
+  }, []);
 
   useEffect(() => {
     setCommunicator(new Communicator({ sessionToken }));
