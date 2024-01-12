@@ -115,10 +115,6 @@ export const getIframe = async ({ roomId, partnerToken }) => {
   // url.searchParams.append("staginglively", 1);
   url.searchParams.append("trackId", "test");
   // url.searchParams.append("overrideHost", "http://localhost:3000/");
-  // url.searchParams.append(
-  //   "overrideHost",
-  //   "https://stagingbrokers.videochatprovider.com/"
-  // );
 
   const response = await fetch(url, {
     method: "GET",
