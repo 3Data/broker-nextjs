@@ -10,14 +10,14 @@ export default async function Webcam({ params }) {
   const { data: iframe } = await getIframe({ roomId: room.id, partnerToken });
 
   return (
-    <main className="container mx-auto p-2">
+    <main className="container mx-auto p-2 grow flex flex-col">
       <h1>Sala de: {room.nick}</h1>
-      <div className="h-8" />
+      <div className="h-2 sm:h-8" />
       <RoomProvider
         sessionToken={iframe.sessionToken}
         defaultMode={room.roomMode}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="flex flex-col grow sm:grow-0 sm:grid sm:grid-cols-3 gap-4">
           <div className="sm:col-span-2">
             <div className="relative">
               <RoomMode className="absolute top-2 right-2" />
@@ -31,8 +31,8 @@ export default async function Webcam({ params }) {
             <div className="h-2" />
             <Controls />
           </div>
-          <div>
-            <Chat sessionToken={iframe.sessionToken} />
+          <div className="flex flex-col grow">
+            <Chat sessionToken={iframe.sessionToken} className="h-full" />
             <iframe name="chat-frame" src={iframe.urlChat} className="hidden" />
           </div>
         </div>
