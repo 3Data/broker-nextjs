@@ -1,6 +1,6 @@
 export const Messages = ({ messages = [] }) => {
   return (
-    <ol className="space-y-1 min-h-[200px]">
+    <ol className="space-y-1 grow shrink">
       {messages.map((message, index) => (
         <li
           key={index}

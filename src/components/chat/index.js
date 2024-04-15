@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { twMerge } from "tailwind-merge";
 import { Communicator } from "@pw2016/pw-player-communicator";
 
 import { Input } from "./Input";
 import { Messages } from "./Messages";
 
-export const Chat = ({ sessionToken }) => {
+export const Chat = ({ sessionToken, className }) => {
   const [messages, setMessages] = useState([]);
   const [communicator, setCommunicator] = useState(null);
 
@@ -33,7 +34,12 @@ export const Chat = ({ sessionToken }) => {
   };
 
   return (
-    <div className="flex flex-col gap-2 rounded-lg bg-slate-200 p-2">
+    <div
+      className={twMerge(
+        "flex flex-col gap-2 rounded-lg bg-slate-200 p-2",
+        className
+      )}
+    >
       <Messages messages={messages} />
       <Input sendMessage={sendMessage} />
     </div>
