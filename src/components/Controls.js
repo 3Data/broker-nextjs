@@ -10,7 +10,9 @@ export const Controls = () => {
     setVolume,
     playing,
     goToGroupChat,
+    goToVIP,
     roomMode,
+    requestingVIP,
   } = useRoom();
 
   return (
@@ -36,9 +38,21 @@ export const Controls = () => {
       <button
         className="bg-slate-200 text-slate-800 px-2 py-1 rounded text-xs font-semibold disabled:opacity-50"
         onClick={goToGroupChat}
-        disabled={!playing || roomMode === "private"}
+        disabled={
+          !playing ||
+          roomMode === "private" ||
+          roomMode === "vip" ||
+          requestingVIP
+        }
       >
         Ir a privado
+      </button>
+      <button
+        className="bg-slate-200 text-slate-800 px-2 py-1 rounded text-xs font-semibold disabled:opacity-50"
+        onClick={goToVIP}
+        disabled={!playing || roomMode === "vip" || requestingVIP}
+      >
+        {requestingVIP ? "Solicitando..." : "Solicitar VIP"}
       </button>
     </div>
   );

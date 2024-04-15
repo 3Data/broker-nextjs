@@ -22,6 +22,7 @@ export const RoomProvider = ({
   const [volume, setVolume] = useState(1);
   const [playing, setPlaying] = useState(false);
   const [roomMode, setRoomMode] = useState(defaultMode);
+  const [requestingVIP, setRequestingVIP] = useState(false);
 
   const [communicator, setCommunicator] = useState(null);
 
@@ -36,9 +37,28 @@ export const RoomProvider = ({
     communicator.goToGroupChat();
   };
 
+  const goToVIP = () => {
+    if (!communicator) return;
+    communicator.requestVIP();
+    setRequestingVIP(true);
+  };
+
   const onVideoPlay = useCallback(() => {
     setPlaying(true);
     if (!checkAudio()) setMuted(true);
+  }, []);
+
+  const onVIPRequestStatusUpdate = useCallback((status) => {
+    switch (status) {
+      case "requesting":
+        setRequestingVIP(true);
+        break;
+      case "rejected":
+      case "accepted":
+        setRequestingVIP(false);
+        break;
+      // no default
+    }
   }, []);
 
   useEffect(() => {
@@ -68,6 +88,15 @@ export const RoomProvider = ({
     communicator.setVolume(volume);
   }, [communicator, volume]);
 
+  // Sync VIP request status with communicator
+  useEffect(() => {
+    if (!communicator) return;
+    communicator.on("VIPRequestStatusUpdate", onVIPRequestStatusUpdate);
+    return () => {
+      communicator.off("VIPRequestStatusUpdate", onVIPRequestStatusUpdate);
+    };
+  }, [communicator, onVIPRequestStatusUpdate]);
+
   return (
     <Room.Provider
       value={{
@@ -76,9 +105,11 @@ export const RoomProvider = ({
         muted,
         toggleMute,
         goToGroupChat,
+        goToVIP,
         roomMode,
         volume,
         setVolume,
+        requestingVIP,
       }}
     >
       {children}
