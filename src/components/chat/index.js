@@ -36,7 +36,7 @@ export const Chat = ({ sessionToken, className }) => {
   return (
     <div
       className={twMerge(
-        "flex flex-col gap-2 rounded-lg bg-slate-200 p-2",
+        "flex flex-col gap-1 rounded-md bg-slate-200 p-1 max-h-full absolute inset-0",
         className
       )}
     >

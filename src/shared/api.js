@@ -21,9 +21,7 @@ export const getRooms = async () => {
   const response = await fetch(url, {
     method: "GET",
     headers: DEFAULT_HEADERS,
-    next: {
-      revalidate: 20,
-    },
+    cache: "no-store",
   });
 
   status = response.status;
@@ -108,6 +106,7 @@ export const getIframe = async ({ roomId, partnerToken }) => {
   url.searchParams.append("mode", "auto");
   url.searchParams.append("id", roomId);
   url.searchParams.append("userid", "userid-formacion");
+  url.searchParams.append("userLang", "es");
   url.searchParams.append("token", "usertoken-formacion");
   url.searchParams.append("nick", "usernick-formacion");
   url.searchParams.append("pruebas", 1);
