@@ -2,6 +2,8 @@
 
 import { useRoom } from "@/app/contexts/room";
 
+import { ControlButton } from "@/components/ControlButton";
+
 export const Controls = () => {
   const {
     muted,
@@ -15,45 +17,37 @@ export const Controls = () => {
     requestingVIP,
   } = useRoom();
 
+  const privateDisabled =
+    !playing || roomMode === "private" || roomMode === "vip" || requestingVIP;
+
+  const vipDisabled = !playing || roomMode === "vip" || requestingVIP;
+
   return (
-    <div className="bg-slate-700 p-2 rounded-lg flex items-center gap-2">
+    <div className="bg-slate-200 p-1.5 rounded-md rounded-t-none flex items-center gap-1">
       <input
         type="range"
         min={0}
         max={1}
         step={0.1}
         disabled={!playing}
-        className="accent-pink-500 h-1 w-16"
+        className="accent-white h-1 w-16 max-sm:hidden"
         value={volume}
         onChange={(e) => setVolume(Number(e.target.value))}
       />
-      <button
-        className="bg-slate-200 text-slate-800 px-2 py-1 rounded text-xs font-semibold disabled:opacity-50"
-        onClick={toggleMute}
-        disabled={!playing}
-      >
-        {muted ? "Audio OFF" : "Audio ON"} ({volume * 100}%)
-      </button>
+      <ControlButton onClick={toggleMute} disabled={!playing}>
+        {muted ? "Audio OFF" : "Audio ON"}
+        <span className="max-md:hidden"> ({volume * 100}%)</span>
+      </ControlButton>
       <div className="grow" />
-      <button
-        className="bg-slate-200 text-slate-800 px-2 py-1 rounded text-xs font-semibold disabled:opacity-50"
-        onClick={goToGroupChat}
-        disabled={
-          !playing ||
-          roomMode === "private" ||
-          roomMode === "vip" ||
-          requestingVIP
-        }
-      >
+      {/* <ControlButton disabled={!playing}>
+        Tip 1 cr.
+      </ControlButton> */}
+      <ControlButton onClick={goToGroupChat} disabled={privateDisabled}>
         Ir a privado
-      </button>
-      <button
-        className="bg-slate-200 text-slate-800 px-2 py-1 rounded text-xs font-semibold disabled:opacity-50"
-        onClick={goToVIP}
-        disabled={!playing || roomMode === "vip" || requestingVIP}
-      >
+      </ControlButton>
+      <ControlButton onClick={goToVIP} disabled={vipDisabled}>
         {requestingVIP ? "Solicitando..." : "Solicitar VIP"}
-      </button>
+      </ControlButton>
     </div>
   );
 };

@@ -17,21 +17,20 @@ export default async function Webcam({ params }) {
         sessionToken={iframe.sessionToken}
         defaultMode={room.roomMode}
       >
-        <div className="flex flex-col grow sm:grow-0 sm:grid sm:grid-cols-3 gap-4">
+        <div className="flex flex-col grow sm:grow-0 sm:grid sm:grid-cols-3 gap-1">
           <div className="sm:col-span-2">
             <div className="relative">
               <RoomMode className="absolute top-2 right-2" />
               <iframe
                 name="video-frame"
                 src={iframe.urlVideo}
-                className="w-full rounded-lg bg-black aspect-video"
+                className="w-full rounded-md rounded-b-none bg-black aspect-video"
                 allow="geolocation;microphone;camera;autoplay;fullscreen"
               />
             </div>
-            <div className="h-2" />
             <Controls />
           </div>
-          <div className="flex flex-col grow">
+          <div className="flex flex-col grow relative">
             <Chat sessionToken={iframe.sessionToken} className="h-full" />
             <iframe name="chat-frame" src={iframe.urlChat} className="hidden" />
           </div>

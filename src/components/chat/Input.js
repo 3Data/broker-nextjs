@@ -12,7 +12,7 @@ export const Input = ({ sendMessage }) => {
   return (
     <form
       onSubmit={send}
-      className="bg-slate-300 rounded-lg p-1 flex items-center gap-1 text-xs"
+      className="bg-slate-300 rounded-md p-1 flex items-center gap-1 text-xs"
     >
       <input
         type="text"
