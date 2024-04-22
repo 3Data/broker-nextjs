@@ -31,8 +31,7 @@ export default async function Webcam({ params }) {
             <Controls />
           </div>
           <div className="flex flex-col grow relative">
-            <Chat sessionToken={iframe.sessionToken} className="h-full" />
-            <iframe name="chat-frame" src={iframe.urlChat} className="hidden" />
+            <Chat urlChat={iframe.urlChat} sessionToken={iframe.sessionToken} />
           </div>
         </div>
       </RoomProvider>
