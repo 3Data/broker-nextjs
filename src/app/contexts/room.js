@@ -23,12 +23,23 @@ export const RoomProvider = ({
   const [playing, setPlaying] = useState(false);
   const [roomMode, setRoomMode] = useState(defaultMode);
   const [requestingVIP, setRequestingVIP] = useState(false);
+  const [userCamStatus, setUserCamStatus] = useState(null);
 
   const [communicator, setCommunicator] = useState(null);
 
   useEffect(() => {
     setCommunicator(new Communicator({ sessionToken }));
   }, [sessionToken]);
+
+  const activateUserCam = () => {
+    if (!communicator) return;
+    communicator.activateUserCam();
+  };
+
+  const deactivateUserCam = () => {
+    if (!communicator) return;
+    communicator.deactivateUserCam();
+  };
 
   const toggleMute = () => setMuted(!muted);
 
@@ -61,6 +72,10 @@ export const RoomProvider = ({
     }
   }, []);
 
+  const onUserCamStatus = useCallback((status) => {
+    setUserCamStatus(status.toLowerCase());
+  }, []);
+
   useEffect(() => {
     setCommunicator(new Communicator({ sessionToken }));
   }, [sessionToken]);
@@ -69,12 +84,14 @@ export const RoomProvider = ({
     if (!communicator) return;
     communicator.on("videoPlay", onVideoPlay);
     communicator.on("roomModeUpdate", setRoomMode);
+    communicator.on("userCamStatus", onUserCamStatus);
 
     return () => {
       communicator.off("videoPlay", onVideoPlay);
       communicator.off("roomModeUpdate", setRoomMode);
+      communicator.off("userCamStatus", onUserCamStatus);
     };
-  }, [communicator, onVideoPlay]);
+  }, [communicator, onUserCamStatus, onVideoPlay]);
 
   // Sync mute with communicator
   useEffect(() => {
@@ -110,6 +127,9 @@ export const RoomProvider = ({
         volume,
         setVolume,
         requestingVIP,
+        activateUserCam,
+        deactivateUserCam,
+        userCamStatus,
       }}
     >
       {children}
