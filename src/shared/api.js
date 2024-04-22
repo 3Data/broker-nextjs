@@ -105,10 +105,10 @@ export const getIframe = async ({ roomId, partnerToken }) => {
   url.searchParams.append("app", process.env.NEXT_PUBLIC_APP_ID);
   url.searchParams.append("mode", "auto");
   url.searchParams.append("id", roomId);
-  url.searchParams.append("userid", "userid-formacion");
+  url.searchParams.append("userid", "userid-brokerstest");
   url.searchParams.append("userLang", "es");
-  url.searchParams.append("token", "usertoken-formacion");
-  url.searchParams.append("nick", "usernick-formacion");
+  url.searchParams.append("token", "usertoken-brokerstest");
+  url.searchParams.append("nick", "usernick-brokerstest");
   url.searchParams.append("pruebas", 1);
   url.searchParams.append("stagingIframe", 0);
   // url.searchParams.append("staginglively", 1);
