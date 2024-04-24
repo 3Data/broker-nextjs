@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@pw2016/pw-player-communicator": "^1.9.2",
+    "@pw2016/pw-player-communicator": "^2.0.0",
     "next": "^14.2.1",
     "react": "^18",
     "react-dom": "^18",
