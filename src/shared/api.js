@@ -7,7 +7,7 @@ const DEFAULT_HEADERS = {
   "user-region": "08",
 };
 
-export const getRooms = async () => {
+export const getRooms = async ({ partnerToken }) => {
   let error;
   let status;
   let data;
@@ -20,7 +20,7 @@ export const getRooms = async () => {
 
   const response = await fetch(url, {
     method: "GET",
-    headers: DEFAULT_HEADERS,
+    headers: { ...DEFAULT_HEADERS, "partner-token": partnerToken },
     cache: "no-store",
   });
 

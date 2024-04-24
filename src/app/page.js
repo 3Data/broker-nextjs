@@ -1,8 +1,9 @@
 import { RoomItem } from "@/components/RoomItem";
-import { getRooms } from "@/shared/api";
+import { getPartnerToken, getRooms } from "@/shared/api";
 
 export default async function Home() {
-  const { data: roomlist, error } = await getRooms();
+  const { data: partnerToken } = await getPartnerToken();
+  const { data: roomlist, error } = await getRooms({ partnerToken });
 
   if (error) {
     return (
