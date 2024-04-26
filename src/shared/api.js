@@ -111,6 +111,7 @@ export const getIframe = async ({ roomId, partnerToken }) => {
   url.searchParams.append("nick", "usernick-brokerstest");
   url.searchParams.append("pruebas", 1);
   url.searchParams.append("stagingIframe", 0);
+  url.searchParams.append("ttl", 45);
   // url.searchParams.append("staginglively", 1);
   url.searchParams.append("trackId", "test");
   // url.searchParams.append("overrideHost", "http://localhost:3000/");
