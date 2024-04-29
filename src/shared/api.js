@@ -21,7 +21,7 @@ export const getRooms = async ({ partnerToken }) => {
   const response = await fetch(url, {
     method: "GET",
     headers: { ...DEFAULT_HEADERS, "partner-token": partnerToken },
-    cache: "no-store",
+    next: { revalidate: 0 },
   });
 
   status = response.status;

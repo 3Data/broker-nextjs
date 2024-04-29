@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { RoomItem } from "@/components/RoomItem";
 import { getPartnerToken, getRooms } from "@/shared/api";
 
