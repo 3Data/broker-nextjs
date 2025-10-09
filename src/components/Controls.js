@@ -1,12 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { useRoom } from "@/app/contexts/room";
 
 import { ControlButton } from "@/components/ControlButton";
 
-import { Volume2Icon, VolumeXIcon, WebcamIcon } from "lucide-react";
+import {
+  HatGlassesIcon,
+  Volume2Icon,
+  VolumeXIcon,
+  WebcamIcon,
+} from "lucide-react";
 
 export const Controls = () => {
   const {
@@ -23,6 +29,8 @@ export const Controls = () => {
     deactivateUserCam,
     userCamStatus,
   } = useRoom();
+
+  const [spyModeEnabled, setSpyModeEnabled] = useState(false);
 
   const shareWebcamDisabled =
     !playing || (roomMode !== "private" && roomMode !== "vip");
@@ -72,6 +80,14 @@ export const Controls = () => {
       </ControlButton>
       <ControlButton onClick={goToVIP} disabled={vipDisabled}>
         {requestingVIP ? "Solicitando..." : "Solicitar VIP"}
+      </ControlButton>
+      <ControlButton
+        onClick={() => setSpyModeEnabled(!spyModeEnabled)}
+        className={twMerge(
+          spyModeEnabled && "bg-emerald-500 hover:enabled:bg-emerald-500"
+        )}
+      >
+        <HatGlassesIcon className="size-4" />
       </ControlButton>
     </div>
   );
