@@ -1,6 +1,6 @@
 import { RoomProvider } from "@/app/contexts/room";
 import { Controls } from "@/components/Controls";
-import { RoomMode } from "@/components/RoomMode";
+import { Video } from "@/components/Video";
 import { Chat } from "@/components/chat";
 import { getIframe, getPartnerToken, getRoom } from "@/shared/api";
 
@@ -20,15 +20,7 @@ export default async function Webcam(props) {
       >
         <div className="flex flex-col grow sm:grow-0 sm:grid sm:grid-cols-3 gap-1">
           <div className="sm:col-span-2">
-            <div className="relative">
-              <RoomMode className="absolute top-2 right-2" />
-              <iframe
-                name="video-frame"
-                src={iframe.urlVideo}
-                className="w-full rounded-md rounded-b-none bg-black aspect-video"
-                allow="geolocation;microphone;camera;autoplay;fullscreen"
-              />
-            </div>
+            <Video src={iframe.urlVideo} />
             <Controls />
           </div>
           <div className="flex flex-col grow relative">
