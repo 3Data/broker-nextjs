@@ -24,6 +24,7 @@ export const RoomProvider = ({
   const [roomMode, setRoomMode] = useState(defaultMode);
   const [requestingVIP, setRequestingVIP] = useState(false);
   const [userCamStatus, setUserCamStatus] = useState(null);
+  const [disconnectionReason, setDisconnectionReason] = useState(null);
 
   const [communicator, setCommunicator] = useState(null);
 
@@ -76,19 +77,24 @@ export const RoomProvider = ({
     setUserCamStatus(status.toLowerCase());
   }, []);
 
+  const onDisconnected = useCallback((reason) => {
+    setDisconnectionReason(reason);
+  }, []);
 
   useEffect(() => {
     if (!communicator) return;
     communicator.on("videoPlay", onVideoPlay);
     communicator.on("roomModeUpdate", setRoomMode);
     communicator.on("userCamStatus", onUserCamStatus);
+    communicator.on("disconnected", onDisconnected);
 
     return () => {
       communicator.off("videoPlay", onVideoPlay);
       communicator.off("roomModeUpdate", setRoomMode);
       communicator.off("userCamStatus", onUserCamStatus);
+      communicator.off("disconnected", onDisconnected);
     };
-  }, [communicator, onUserCamStatus, onVideoPlay]);
+  }, [communicator, onDisconnected, onUserCamStatus, onVideoPlay]);
 
   // Sync mute with communicator
   useEffect(() => {
@@ -127,6 +133,8 @@ export const RoomProvider = ({
         activateUserCam,
         deactivateUserCam,
         userCamStatus,
+        disconnectionReason,
+        disconnected: !!disconnectionReason,
       }}
     >
       {children}
