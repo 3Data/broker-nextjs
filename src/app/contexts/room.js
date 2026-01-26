@@ -76,9 +76,6 @@ export const RoomProvider = ({
     setUserCamStatus(status.toLowerCase());
   }, []);
 
-  useEffect(() => {
-    setCommunicator(new Communicator({ sessionToken }));
-  }, [sessionToken]);
 
   useEffect(() => {
     if (!communicator) return;
