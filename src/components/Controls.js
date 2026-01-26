@@ -22,15 +22,21 @@ export const Controls = () => {
     activateUserCam,
     deactivateUserCam,
     userCamStatus,
+    disconnected,
   } = useRoom();
 
   const shareWebcamDisabled =
-    !playing || (roomMode !== "private" && roomMode !== "vip");
+    !playing || disconnected || (roomMode !== "private" && roomMode !== "vip");
 
   const privateDisabled =
-    !playing || roomMode === "private" || roomMode === "vip" || requestingVIP;
+    !playing ||
+    disconnected ||
+    roomMode === "private" ||
+    roomMode === "vip" ||
+    requestingVIP;
 
-  const vipDisabled = !playing || roomMode === "vip" || requestingVIP;
+  const vipDisabled =
+    !playing || disconnected || roomMode === "vip" || requestingVIP;
 
   return (
     <div className="bg-slate-200 p-1.5 rounded-md rounded-t-none flex items-center gap-1">
@@ -62,7 +68,7 @@ export const Controls = () => {
         disabled={shareWebcamDisabled}
         className={twMerge(
           userCamStatus === "ready" &&
-            "bg-emerald-500 hover:enabled:bg-emerald-500"
+            "bg-emerald-500 hover:enabled:bg-emerald-500",
         )}
       >
         <WebcamIcon className="size-4" />
