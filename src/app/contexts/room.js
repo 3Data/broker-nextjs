@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   createContext,
@@ -6,17 +6,17 @@ import {
   useContext,
   useEffect,
   useState,
-} from "react";
-import { Communicator } from "@pw2016/pw-player-communicator";
+} from 'react';
+import { Communicator } from '@pw2016/pw-player-communicator';
 
-import { checkAudio } from "@/shared/utils";
+import { checkAudio } from '@/shared/utils';
 
 const Room = createContext();
 
 export const RoomProvider = ({
   children,
   sessionToken,
-  defaultMode = "offline",
+  defaultMode = 'offline',
 }) => {
   const [muted, setMuted] = useState(false);
   const [volume, setVolume] = useState(1);
@@ -27,6 +27,10 @@ export const RoomProvider = ({
   const [disconnectionReason, setDisconnectionReason] = useState(null);
 
   const [communicator, setCommunicator] = useState(null);
+
+  //on demand
+
+  const [onddemandId, setOndemandId] = useState(null);
 
   useEffect(() => {
     setCommunicator(new Communicator({ sessionToken }));
@@ -62,11 +66,11 @@ export const RoomProvider = ({
 
   const onVIPRequestStatusUpdate = useCallback((status) => {
     switch (status) {
-      case "requesting":
+      case 'requesting':
         setRequestingVIP(true);
         break;
-      case "rejected":
-      case "accepted":
+      case 'rejected':
+      case 'accepted':
         setRequestingVIP(false);
         break;
       // no default
@@ -83,16 +87,16 @@ export const RoomProvider = ({
 
   useEffect(() => {
     if (!communicator) return;
-    communicator.on("videoPlay", onVideoPlay);
-    communicator.on("roomModeUpdate", setRoomMode);
-    communicator.on("userCamStatus", onUserCamStatus);
-    communicator.on("disconnected", onDisconnected);
+    communicator.on('videoPlay', onVideoPlay);
+    communicator.on('roomModeUpdate', setRoomMode);
+    communicator.on('userCamStatus', onUserCamStatus);
+    communicator.on('disconnected', onDisconnected);
 
     return () => {
-      communicator.off("videoPlay", onVideoPlay);
-      communicator.off("roomModeUpdate", setRoomMode);
-      communicator.off("userCamStatus", onUserCamStatus);
-      communicator.off("disconnected", onDisconnected);
+      communicator.off('videoPlay', onVideoPlay);
+      communicator.off('roomModeUpdate', setRoomMode);
+      communicator.off('userCamStatus', onUserCamStatus);
+      communicator.off('disconnected', onDisconnected);
     };
   }, [communicator, onDisconnected, onUserCamStatus, onVideoPlay]);
 
@@ -111,9 +115,9 @@ export const RoomProvider = ({
   // Sync VIP request status with communicator
   useEffect(() => {
     if (!communicator) return;
-    communicator.on("VIPRequestStatusUpdate", onVIPRequestStatusUpdate);
+    communicator.on('VIPRequestStatusUpdate', onVIPRequestStatusUpdate);
     return () => {
-      communicator.off("VIPRequestStatusUpdate", onVIPRequestStatusUpdate);
+      communicator.off('VIPRequestStatusUpdate', onVIPRequestStatusUpdate);
     };
   }, [communicator, onVIPRequestStatusUpdate]);
 
@@ -135,6 +139,8 @@ export const RoomProvider = ({
         userCamStatus,
         disconnectionReason,
         disconnected: !!disconnectionReason,
+        onddemandId,
+        setOndemandId,
       }}
     >
       {children}

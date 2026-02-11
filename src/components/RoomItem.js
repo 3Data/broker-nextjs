@@ -1,7 +1,18 @@
-import Image from "next/image";
-import Link from "next/link";
+'use client';
 
-export const RoomItem = ({ room }) => {
+import Image from 'next/image';
+import Link from 'next/link';
+import { requestOndemand } from '@/shared/api';
+
+import { useOnDemand } from '@/app/contexts/ondemand';
+import { useEffect } from 'react';
+export const RoomItem = ({ room, partnerToken }) => {
+  const { setPartnerToken, NewOnDemand } = useOnDemand();
+  useEffect(() => {
+    if (!partnerToken) return;
+    setPartnerToken(partnerToken);
+  }, [partnerToken]);
+
   return (
     <Link
       href={`/webcam/${room.nick}`}
@@ -20,6 +31,17 @@ export const RoomItem = ({ room }) => {
         <p className="text-xs truncate">
           {room.age} - {room.roomMode}
         </p>
+        {room.onDemand === 1 && (
+          <button
+            className="my-2 text-xs text-green-800 cursor-pointer hover:text-yellow-900"
+            onClick={(e) => {
+              e.preventDefault();
+              NewOnDemand(room.id, room.nick);
+            }}
+          >
+            Request on demand
+          </button>
+        )}
       </div>
     </Link>
   );
