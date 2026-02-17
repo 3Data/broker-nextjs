@@ -48,6 +48,7 @@ export const OnDemandProvider = ({ children }: OnDemandProviderProps) => {
     'CANCELLED',
     'FINISHED',
     'EXPIRED',
+    'WAITING_USER',
   ];
   // Memoize check function to prevent recreating on every render
   const check = useCallback(
