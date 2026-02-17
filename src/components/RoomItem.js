@@ -33,7 +33,7 @@ export const RoomItem = ({ room, partnerToken }) => {
         </p>
         {room.onDemand === 1 && (
           <button
-            className="my-2 text-xs text-green-800 cursor-pointer hover:text-yellow-900"
+            className="my-2 text-sm text-purple-800 cursor-pointer rounded-2xl border border-purple-800 bg-yellow-400 px-2 py-1 hover:bg-purple-700 hover:text-yellow-400"
             onClick={(e) => {
               e.preventDefault();
               NewOnDemand(room.id, room.nick);
