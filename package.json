@@ -9,7 +9,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@pw2016/pw-player-communicator": "^2.0.0",
+    "@pw2016/pw-player-communicator": "^2.0.2",
     "lucide-react": "^0.556.0",
     "next": "16.1.5",
     "react": "19.2.4",
