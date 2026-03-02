@@ -1,8 +1,7 @@
 'use client';
-
+import { useEffect, useRef } from 'react';
 import { useOnDemand } from '@/app/contexts/ondemand';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
 
 const OndemandHandler = () => {
   const { onDemandId, onDemandStatus, onDemandRoomNick } = useOnDemand();
@@ -23,12 +22,16 @@ const OndemandHandler = () => {
     }
   }, [onDemandRoomNick, onDemandStatus, router, hasRedirected]);
   return (
-    <div>
-      {!onDemandId && <p>No on-demand request made yet.</p>}
+    <div className="bg-gray-300 p-4 rounded-md mt-2 w-1/4 text-sm">
+      <p className="text-sm font-bold">On Demand</p>
+      {!onDemandId && (
+        <p className="text-gray-500">No on-demand request made yet.</p>
+      )}
       {onDemandId && (
-        <div>
-          <p>On demand ID: {onDemandId}</p>
-          <p>On demand status: {onDemandStatus}</p>
+        <div className="text-black my-1">
+          <p>
+            On demand status: <b>{onDemandStatus}</b>
+          </p>
         </div>
       )}
     </div>
