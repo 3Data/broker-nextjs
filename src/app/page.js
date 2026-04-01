@@ -1,7 +1,8 @@
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
-import { RoomItem } from "@/components/RoomItem";
-import { getPartnerToken, getRooms } from "@/shared/api";
+import OndemandHandler from '@/components/OndemandHandler';
+import { RoomItem } from '@/components/RoomItem';
+import { getPartnerToken, getRooms } from '@/shared/api';
 
 export default async function Home() {
   const { data: partnerToken } = await getPartnerToken();
@@ -23,10 +24,11 @@ export default async function Home() {
       <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {roomlist.results.map((room) => (
           <li key={room.id}>
-            <RoomItem room={room} />
+            <RoomItem room={room} partnerToken={partnerToken} />
           </li>
         ))}
       </ul>
+      <OndemandHandler />
     </main>
   );
 }
