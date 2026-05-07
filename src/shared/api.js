@@ -77,7 +77,7 @@ export const getPartnerToken = async () => {
     }),
     headers: DEFAULT_HEADERS,
     next: {
-      revalidate: 60 * 60 * 23,
+      revalidate: 60 * 60,
       tags: ["partnertoken"],
     },
   });
